@@ -8,6 +8,7 @@ name = "pypi"
 [packages]
 
 python-dotenv = "*"
+flask = "*"
 
 
 [dev-packages]
