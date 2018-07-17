@@ -1,4 +1,5 @@
 import tweepy
+from urllib.parse import urlparse
 
 from os import environ as e
 consumer_key=e["CONSUMER_KEY"]
@@ -16,3 +17,14 @@ id = "982333086238158848"
 tweet = api.get_status(id)
 
 print(f'User: {tweet.user.screen_name}\nTweet:{tweet.text}\nDate: {tweet.created_at.strftime("%B %e, %Y")}')
+
+def get_tweet_id(url: str) -> str:
+    """
+    Get tweet id from url, i.e. the last part of a url in this form:
+    e.g. 'https://twitter.com/diyclassics/status/1013816168371687424'
+    should return '1013816168371687424'
+    """
+    url_parsed = urlparse(url)
+    url_parts = url_parsed[2].rpartition('/')
+    tweet_id = url_parts[-1]
+    return tweet_id
