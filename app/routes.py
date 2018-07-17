@@ -1,6 +1,6 @@
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm
-from app.models import User
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, EntryForm
+from app.models import User, Entry
 
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
@@ -8,21 +8,20 @@ from werkzeug.urls import url_parse
 
 from datetime import datetime
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
-    posts = [
-        {
-            'author': {'username': 'John'},
-            'body': 'Beautiful day in Portland!'
-        },
-        {
-            'author': {'username': 'Susan'},
-            'body': 'The Avengers movie was so cool!'
-        }
-    ]
-    return render_template("index.html", title='Home Page', posts=posts)
+    form = EntryForm()
+    if form.validate_on_submit():
+        entry = Entry(url=form.url.data, english_word=form.english_word.data, author=current_user)
+        db.session.add(entry)
+        db.session.commit()
+        flash('Your entry has been added!')
+        return redirect(url_for('index'))
+    entries = current_user.submitted_entries().all()
+    return render_template("index.html", title='Home Page', form=form,
+                           entries=entries)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -73,7 +72,7 @@ def user(username):
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
-    form = EditProfileForm()
+    form = EditProfileForm(current_user.username)
     if form.validate_on_submit():
         current_user.username = form.username.data
         current_user.about_me = form.about_me.data

@@ -27,6 +27,10 @@ class User(UserMixin, db.Model):
         return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
             digest, size)
 
+    def submitted_entries(self):
+        submitted = Entry.query.filter_by(user_id=self.id)
+        return submitted.order_by(Entry.timestamp.desc())
+
     def __repr__(self):
         return '<User {}>'.format(self.username)
 
