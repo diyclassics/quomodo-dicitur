@@ -12,11 +12,11 @@ auth.set_access_token(access_token_key, access_token_secret)
 
 api = tweepy.API(auth)
 
-id = "982333086238158848"
+# id = "982333086238158848"
 
-tweet = api.get_status(id)
+# tweet = api.get_status(id)
 
-print(f'User: {tweet.user.screen_name}\nTweet:{tweet.text}\nDate: {tweet.created_at.strftime("%B %e, %Y")}')
+# print(f'User: {tweet.user.screen_name}\nTweet:{tweet.text}\nDate: {tweet.created_at.strftime("%B %e, %Y")}')
 
 def get_tweet_id(url: str) -> str:
     """
@@ -28,3 +28,12 @@ def get_tweet_id(url: str) -> str:
     url_parts = url_parsed[2].rpartition('/')
     tweet_id = url_parts[-1]
     return tweet_id
+
+def get_tweet_screenname(id: str) -> str:
+    return api.get_status(id).user.screen_name
+
+def get_tweet_text(id: str) -> str:
+    return api.get_status(id).text
+
+def get_tweet_date(id: str) -> str:
+    return api.get_status(id).created_at
