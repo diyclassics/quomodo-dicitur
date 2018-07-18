@@ -63,11 +63,8 @@ def register():
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    posts = [
-        {'author': user, 'body': 'Test post #1'},
-        {'author': user, 'body': 'Test post #2'}
-    ]
-    return render_template('user.html', user=user, posts=posts)
+    entries = user.posts.order_by(Entry.timestamp.desc())
+    return render_template('user.html', user=user, entries=entries)
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
@@ -84,6 +81,21 @@ def edit_profile():
         form.about_me.data = current_user.about_me
     return render_template('edit_profile.html', title='Edit Profile',
                            form=form)
+
+@app.route('/explore')
+@login_required
+def explore():
+    entries = Entry.query.order_by(Entry.english_word).all()
+    return render_template('explore.html', title='Explore', entries=entries)
+
+
+@app.route('/entry/<english_word>')
+@login_required
+def entry(english_word):
+    user = current_user
+    entry = Entry.query.filter_by(english_word=english_word).first()
+    return render_template('entry.html', user=user, entry=entry)
+
 
 @app.before_request
 def before_request():

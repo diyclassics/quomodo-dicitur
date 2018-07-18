@@ -1,6 +1,14 @@
 <table>
     <tr valign="top">
-        <td><img src="{{ post.author.avatar(36) }}"></td>
-        <td>{{ post.author.username }} says:<br>{{ post.body }}</td>
+        <td><img src="{{ entry.author.avatar(36) }}"></td>
+        <td>
+            <a href="{{ url_for('user', username=entry.author.username) }}">
+                {{ entry.author.username }}
+            </a>
+            says:<br>
+            <a href="{{ url_for('entry', english_word=entry.english_word) }}">
+              {{ entry.english_word }}
+            </a>
+        </td>
     </tr>
 </table>
