@@ -8,13 +8,28 @@ from werkzeug.urls import url_parse
 
 from datetime import datetime
 
+from app.twitteri import get_tweet_id, get_tweet_screenname, get_tweet_text, get_tweet_date
+
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
     form = EntryForm()
     if form.validate_on_submit():
-        entry = Entry(url=form.url.data, english_word=form.english_word.data, author=current_user)
+        id = get_tweet_id(form.url.data)
+        screenname = get_tweet_screenname(id)
+        text = get_tweet_text(id)
+        date = get_tweet_date(id)
+
+        # Add body
+        entry = Entry(url=form.url.data,
+                        english_word=form.english_word.data,
+                        tweet_id=id,
+                        username=screenname,
+                        body=text,
+                        tweet_date=date,
+                        author=current_user)
+
         db.session.add(entry)
         db.session.commit()
         flash('Your entry has been added!')
