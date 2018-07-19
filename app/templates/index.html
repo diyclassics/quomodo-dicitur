@@ -6,16 +6,16 @@
     <form action="" method="post">
         {{ form.hidden_tag() }}
         <p>
-            {{ form.english_word.label }}<br>
-            {{ form.english_word(cols=32, rows=4) }}<br>
-            {% for error in form.english_word.errors %}
+            {{ form.url.label }}<br>
+            {{ form.url(cols=32, rows=4) }}<br>
+            {% for error in form.url.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
-            {{ form.url.label }}<br>
-            {{ form.url(cols=32, rows=4) }}<br>
-            {% for error in form.url.errors %}
+            {{ form.english_word.label }}<br>
+            {{ form.english_word(cols=32, rows=4) }}<br>
+            {% for error in form.english_word.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
