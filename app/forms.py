@@ -51,3 +51,11 @@ class EntryForm(FlaskForm):
     url = StringField('URL', validators=[
         DataRequired(), Length(min=1, max=140)])
     submit = SubmitField('Submit')
+
+
+class DefinitionForm(FlaskForm):
+    latin_word = StringField('Latin definition', validators=[
+        DataRequired(), Length(min=1, max=140)])
+    url = StringField('URL', validators=[
+        DataRequired(), Length(min=1, max=140)])
+    submit = SubmitField('Submit')

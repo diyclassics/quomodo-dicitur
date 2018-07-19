@@ -1,6 +1,6 @@
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, EntryForm
-from app.models import User, Entry
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, EntryForm, DefinitionForm
+from app.models import User, Entry, Definitions
 
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
@@ -104,12 +104,35 @@ def explore():
     return render_template('explore.html', title='Explore', entries=entries)
 
 
-@app.route('/entry/<english_word>')
+@app.route('/entry/<english_word>', methods=['GET', 'POST'])
 @login_required
 def entry(english_word):
     user = current_user
     entry = Entry.query.filter_by(english_word=english_word).first()
-    return render_template('entry.html', user=user, entry=entry)
+
+    form = DefinitionForm()
+    if form.validate_on_submit():
+        id = get_tweet_id(form.url.data)
+        screenname = get_tweet_screenname(id)
+        text = get_tweet_text(id)
+        date = get_tweet_date(id)
+
+        # Add body
+        definition = Definitions(url=form.url.data,
+                        latin_word=form.latin_word.data,
+                        tweet_id=id,
+                        username=screenname,
+                        body=text,
+                        tweet_date=date,
+                        entry=entry)
+
+        db.session.add(entry)
+        db.session.commit()
+        flash('Your defintion has been added!')
+        return redirect(url_for('entry'))
+
+    entry = Entry.query.filter_by(english_word=english_word).first()
+    return render_template('entry.html', form=form, user=user, entry=entry)
 
 
 @app.before_request
