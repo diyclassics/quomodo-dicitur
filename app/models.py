@@ -37,6 +37,7 @@ class User(UserMixin, db.Model):
 
 class Entry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    definitions = db.relationship('Definitions', backref='entry', lazy='dynamic')
     url = db.Column(db.String)
     english_word = db.Column(db.String, index=True, unique=True)
     latin_top_choice = db.Column(db.String, index=True)
@@ -61,6 +62,35 @@ class Entry(db.Model):
 
     def __repr__(self):
         return '<Entry {}>'.format(self.english_word)
+
+
+class Definitions(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    url = db.Column(db.String)
+    latin_word = db.Column(db.String, index=True, unique=True)
+    tweet_id = db.Column(db.String, index=True)
+    username = db.Column(db.String)
+    body = db.Column(db.String(140))
+    tweet_date = db.Column(db.DateTime)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    entry_id = db.Column(db.Integer, db.ForeignKey('entry.id'))
+
+    def set_tweet_id(self, url):
+        self.tweet_username = get_tweet_id(url)
+
+    def set_tweet_screenname(self, id):
+        self.username = get_tweet_screenname(id)
+
+    def set_tweet_text(self, id):
+        self.body = get_tweet_text(id)
+
+    def set_tweet_id(self, id):
+        self.tweet_date = get_tweet_date(id)
+
+    def __repr__(self):
+        return '<Entry {}>'.format(self.english_word)
+
 
 @login.user_loader
 def load_user(id):
