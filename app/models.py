@@ -67,29 +67,29 @@ class Entry(db.Model):
 class Definitions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     url = db.Column(db.String)
-    latin_word = db.Column(db.String, index=True, unique=True)
-    tweet_id = db.Column(db.String, index=True)
-    username = db.Column(db.String)
-    body = db.Column(db.String(140))
-    tweet_date = db.Column(db.DateTime)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    latin_word = db.Column(db.String, index=True)
+    # tweet_id = db.Column(db.String, index=True)
+    # username = db.Column(db.String)
+    # body = db.Column(db.String(140))
+    # tweet_date = db.Column(db.DateTime)
+    # timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    # user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     entry_id = db.Column(db.Integer, db.ForeignKey('entry.id'))
-
-    def set_tweet_id(self, url):
-        self.tweet_username = get_tweet_id(url)
-
-    def set_tweet_screenname(self, id):
-        self.username = get_tweet_screenname(id)
-
-    def set_tweet_text(self, id):
-        self.body = get_tweet_text(id)
-
-    def set_tweet_id(self, id):
-        self.tweet_date = get_tweet_date(id)
-
-    def __repr__(self):
-        return '<Entry {}>'.format(self.english_word)
+    #
+    # def set_tweet_id(self, url):
+    #     self.tweet_username = get_tweet_id(url)
+    #
+    # def set_tweet_screenname(self, id):
+    #     self.username = get_tweet_screenname(id)
+    #
+    # def set_tweet_text(self, id):
+    #     self.body = get_tweet_text(id)
+    #
+    # def set_tweet_id(self, id):
+    #     self.tweet_date = get_tweet_date(id)
+    #
+    # def __repr__(self):
+    #     return '<Definitions {}>'.format(self.latin_word)
 
 
 @login.user_loader

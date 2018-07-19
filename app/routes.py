@@ -112,24 +112,27 @@ def entry(english_word):
 
     form = DefinitionForm()
     if form.validate_on_submit():
-        id = get_tweet_id(form.url.data)
-        screenname = get_tweet_screenname(id)
-        text = get_tweet_text(id)
-        date = get_tweet_date(id)
+        # id = get_tweet_id(form.url.data)
+        # screenname = get_tweet_screenname(id)
+        # text = get_tweet_text(id)
+        # date = get_tweet_date(id)
 
         # Add body
+        # definition = Definitions(url=form.url.data,
+        #                 latin_word=form.latin_word.data,
+        #                 tweet_id=id,
+        #                 username=screenname,
+        #                 body=text,
+        #                 tweet_date=date,
+        #                 entry=entry)
         definition = Definitions(url=form.url.data,
                         latin_word=form.latin_word.data,
-                        tweet_id=id,
-                        username=screenname,
-                        body=text,
-                        tweet_date=date,
                         entry=entry)
 
         db.session.add(entry)
         db.session.commit()
         flash('Your defintion has been added!')
-        return redirect(url_for('entry'))
+        return redirect(url_for('entry', english_word=english_word))
 
     entry = Entry.query.filter_by(english_word=english_word).first()
     return render_template('entry.html', form=form, user=user, entry=entry)
