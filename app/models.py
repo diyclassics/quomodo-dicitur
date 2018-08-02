@@ -68,12 +68,12 @@ class Definitions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     url = db.Column(db.String)
     latin_word = db.Column(db.String, index=True)
-    # tweet_id = db.Column(db.String, index=True)
-    # username = db.Column(db.String)
-    # body = db.Column(db.String(140))
-    # tweet_date = db.Column(db.DateTime)
-    # timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    # user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    tweet_id = db.Column(db.String, index=True)
+    username = db.Column(db.String)
+    body = db.Column(db.String(140))
+    tweet_date = db.Column(db.DateTime)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     entry_id = db.Column(db.Integer, db.ForeignKey('entry.id'))
     #
     # def set_tweet_id(self, url):
