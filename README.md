@@ -1,1 +1,1 @@
-Wireframe for 'quomodo dicitur' Flask app
+Wireframe for 'Lexicon Recentissimae Latinitatis' Flask app used as part of the paper "Carpe DM: Twitter and the Rise of the Social-Media Scholiast" for the »5000 Years of Comments« conference at the Center for Hellenic Studies, August 9, 2018.
