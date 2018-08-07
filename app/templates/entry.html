@@ -1,19 +1,14 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-    <table>
-        <tr valign="top">
-            <td><img src="{{ user.avatar(128) }}"></td>
-        </tr>
-    </table>
 
-    <hr>
 <h1>{{ entry.english_word }}</h1>
 <p>Requested by <a href="http://www.twitter.com/{{ entry.username }}">{{ entry.username }}</a> on {{ entry.tweet_date.strftime('%m.%d.%Y') }} at: <a href="{{ entry.url }}" target="_blank">{{ entry.url }}</a></p>
 
 <h4 style='padding-top: 10px;'>Definitions</h4>
 {% for definition in definitions %}
-  <p><a href="{{ definition.url }}">{{ definition.latin_word }}</a></p>
+  <p><a href="{{ definition.url }}">{{ definition.latin_word }}</a>
+[<a href="#" title="upvote">▲</a> <a href="#" title="upvote">▼</a>]</p>
 {% endfor %}
 
 <hr>
@@ -21,16 +16,16 @@
 <form action="" method="post">
     {{ form.hidden_tag() }}
     <p>
-        {{ form.url.label }}<br>
-        {{ form.url(cols=32, rows=4) }}<br>
-        {% for error in form.url.errors %}
+        {{ form.latin_word.label }}<br>
+        {{ form.latin_word(cols=32, rows=4) }}<br>
+        {% for error in form.latin_word.errors %}
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
     </p>
     <p>
-        {{ form.latin_word.label }}<br>
-        {{ form.latin_word(cols=32, rows=4) }}<br>
-        {% for error in form.latin_word.errors %}
+        {{ form.url.label }}<br>
+        {{ form.url(cols=32, rows=4) }}<br>
+        {% for error in form.url.errors %}
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
     </p>
