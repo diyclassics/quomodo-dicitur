@@ -76,6 +76,7 @@ class Definitions(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     entry_id = db.Column(db.Integer, db.ForeignKey('entry.id'))
     votes = db.Column(db.Integer, default=0)
+
     #
     # def set_tweet_id(self, url):
     #     self.tweet_username = get_tweet_id(url)

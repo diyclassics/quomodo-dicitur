@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
-<h1>Lexicon Recentissimae Latinitatis wordlist</h1>
 
 {% block app_content %}
+<h1><i>Lexicon Recentissimae Latinitatis</i> wordlist</h1>
     {% for definition in definitions %}
       {% include '_entry.html' %}
     {% endfor %}
