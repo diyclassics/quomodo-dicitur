@@ -101,7 +101,13 @@ def edit_profile():
 @login_required
 def explore():
     entries = Entry.query.order_by(Entry.english_word).all()
-    return render_template('explore.html', title='Explore', entries=entries)
+    definitions = []
+    for entry in entries:
+        def_ = Definitions.query.filter_by(entry_id=entry.id)
+        defs_ = [item.latin_word for item in def_]
+        definitions.append({entry.english_word: defs_})
+    print(definitions)
+    return render_template('explore.html', title='Explore', entries=entries, definitions=definitions)
 
 
 @app.route('/entry/<english_word>', methods=['GET', 'POST'])

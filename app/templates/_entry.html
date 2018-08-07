@@ -1,9 +1,10 @@
 <table>
     <tr valign="top">
         <td>
-            <a href="{{ url_for('entry', english_word=entry.english_word) }}">
-              {{ entry.english_word }}
-            </a>
+               {% for key, value in definition.items() %}
+                  <a href="{{ url_for('entry', english_word=key) }}">{{key}}</a>: {% for v in value | sort %}{{v}}{% if not loop.last %},
+{% endif %}{% endfor %}
+               {% endfor %}
         </td>
     </tr>
 </table>

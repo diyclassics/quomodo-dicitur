@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 
-<h1>Quomodo Dicitur wordlist</h1>
+<h1>Lexicon Recentissimae Latinitatis wordlist</h1>
+
 {% block app_content %}
-    {% for entry in entries %}
+    {% for definition in definitions %}
       {% include '_entry.html' %}
     {% endfor %}
 {% endblock %}

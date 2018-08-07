@@ -1,0 +1,9 @@
+<table>
+    <tr valign="top">
+        <td>
+            <a href="{{ url_for('entry', english_word=entry.english_word) }}">
+              {{ entry.english_word }}
+            </a>
+        </td>
+    </tr>
+</table>
