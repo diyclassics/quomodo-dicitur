@@ -14,6 +14,7 @@ flask-migrate = "*"
 flask-login = "*"
 flask-bootstrap = "*"
 flask-moment = "*"
+requests = "*"
 
 [dev-packages]
 python-dotenv = "*"
